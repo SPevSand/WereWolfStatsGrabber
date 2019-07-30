@@ -10,7 +10,9 @@ Uses tgwerewolf.com site to display last kills. Who and by who.
   
     name1:123  
     name2:456  
-  
+
+5. $python start.py
+
 ## Where do I get IDs of players?  
 You can get it with @userinfobot
 
