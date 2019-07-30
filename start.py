@@ -106,13 +106,11 @@ def writeIntoList(PlayerNum, KillOrBy, r):
 #Start of the program
 
 signal.signal(signal.SIGINT, signal_handler)
-print("\n\033[94mWelcome to WereWolf win script for Telegram!\033[0m")
+print("\n\033[94mWelcome to WereWolf Stats Grabber script for Telegram!\033[0m")
 
 print("Avialable names: ")
 for key in bindedPlayers.keys():
   print("\033[92m" + key, end = ' ' + "\033[0m")
-
-#mode = input("Do you want (1)Bind new names, (2)Play by Urls, (3)Play with already binded names?")
 
 while True:
     tempvar = input("\nEnter player's binded name: ")
