@@ -9,11 +9,8 @@ def signal_handler(sig, frame):
         sys.exit(0)
 
 class Player:
-    name = ""
-    
-    Kills = []
-    KilledBy = []
-    
+    Name = ""
+
     KillsNames = []
     KillsNumbers = []
     KilledByNames = []
@@ -28,8 +25,10 @@ class Player:
     
     KillUrl = ""
     KilledByUrl = ""
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, Name, KillUrl, KilledByUrl):
+        self.Name = Name
+        self.KillUrl = KillUrl
+        self.KilledByUrl = KilledByUrl
 
 deltext1 = '"\\u003ctable class=\\"table table-hover\\"\\u003e\\u003ctbody\\u003e\\u003ctr\\u003e\\u003cth\\u003ePlayer Name\\u003c/th\\u003e\\u003cth\\u003eTimes\\u003c/th\\u003e\\u003c/tr\\u003e\\u003ctr\\u003e\\u003ctd\\u003e\\u003cb\\u003e'
 deltext2 = '\\u003c/b\\u003e\\u003c/td\\u003e\\u003ctd\\u003e'
@@ -124,21 +123,18 @@ while True:
             print("\033[91mGame starts\033[0m\n")
             break
     else:
-        players.append(Player(tempvar))
+        r = requests.get("https://www.tgwerewolf.com/Stats/Player/" + bindedPlayers[tempvar])
+        getName = (html.fromstring(r.text).xpath('.//div[@class="box-title margin-bottom-30"]/p/text()'))
+        
+        players.append(Player("".join(getName), urlKills + bindedPlayers[tempvar] + "?pid=" + bindedPlayers[tempvar], urlKilledBy + bindedPlayers[tempvar] + "?pid=" + bindedPlayers[tempvar]))
+        
+        print("Got new name: " + "".join(getName))
         amount_int += 1
         print("Amount of players: " + str(amount_int), end = '')
         
 del tempvar
 
 for x in range(0, amount_int):
-    players[x].KillUrl = urlKills + bindedPlayers[players[x].name] + "?pid=" + bindedPlayers[players[x].name]
-    players[x].KilledByUrl = urlKilledBy + bindedPlayers[players[x].name] + "?pid=" + bindedPlayers[players[x].name]
-    
-    r = requests.get("https://www.tgwerewolf.com/Stats/Player/" + bindedPlayers[players[x].name])
-    getName = (html.fromstring(r.text).xpath('.//div[@class="box-title margin-bottom-30"]/p/text()'))
-    players[x].name = ("".join(getName))
-    print("Got new name: " + "".join(getName))
-    
     updateKills(x)
     updateKilledBy(x)
     players[x].lastKillsNames = players[x].KillsNames
@@ -158,27 +154,27 @@ while True:
             
             try:
                 if((players[x].KillsNames.index(players[x].KillsNames[y]) < players[x].lastKillsNames.index(players[x].KillsNames[y]))):
-                    print("It seems " + players[x].name + " killed " + players[x].KillsNames[y])
+                    print("It seems " + players[x].Name + " killed " + players[x].KillsNames[y])
             except ValueError:
                 for z in range(0, players[x].KillsListEntries):
                     if(players[x].KillsNames[z] not in players[x].lastKillsNames):
-                        print("It seems " + players[x].name + " killed " + players[x].KillsNames[z])
+                        print("It seems " + players[x].Name + " killed " + players[x].KillsNames[z])
                         
             if((int(players[x].KillsNumbers[y]) > int(players[x].lastKillsNumbers[y])) and (players[x].KillsNames[y] == players[x].lastKillsNames[y])):
-                print("It seems " + players[x].name + " killed " + players[x].KillsNames[y])
+                print("It seems " + players[x].Name + " killed " + players[x].KillsNames[y])
                 
         for y in range(0, players[x].KilledByListEntries):
             
             try:
                 if((players[x].KilledByNames.index(players[x].KilledByNames[y]) < players[x].lastKilledByNames.index(players[x].KilledByNames[y]))):
-                    print("It seems " + players[x].KilledByNames[y] + " killed " + players[x].name)
+                    print("It seems " + players[x].KilledByNames[y] + " killed " + players[x].Name)
             except ValueError:
                 for z in range(0, players[x].KilledByListEntries):
                     if(players[x].KilledByNames[z] not in players[x].lastKilledByNames):
-                        print("It seems " + players[x].KilledByNames[z] + " killed " + players[x].name)
+                        print("It seems " + players[x].KilledByNames[z] + " killed " + players[x].Name)
                         
             if(int(players[x].KilledByNumbers[y]) > int(players[x].lastKilledByNumbers[y]) and (players[x].KilledByNames[y] == players[x].lastKilledByNames[y])):
-                print("It seems " + players[x].KilledByNames[y] + " killed " + players[x].name)
+                print("It seems " + players[x].KilledByNames[y] + " killed " + players[x].Name)
                 
         players[x].lastKillsNames = players[x].KillsNames
         players[x].lastKillsNumbers = players[x].KillsNumbers
