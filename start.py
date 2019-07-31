@@ -34,6 +34,7 @@ deltext1 = '"\\u003ctable class=\\"table table-hover\\"\\u003e\\u003ctbody\\u003
 deltext2 = '\\u003c/b\\u003e\\u003c/td\\u003e\\u003ctd\\u003e'
 deltext3 = '\\u003c/td\\u003e\\u003c/tr\\u003e\\u003ctr\\u003e\\u003ctd\\u003e\\u003cb\\u003e'
 deltext4 = '\\u003c/td\\u003e\\u003c/tr\\u003e\\u003c/tbody\\u003e\\u003c/table\\u003e"'
+deltext5 = '"\\u003ctable class=\\"table table-hover\\"\\u003e\\u003ctbody\\u003e\\u003ctr\\u003e\\u003cth\\u003ePlayer Name\\u003c/th\\u003e\\u003cth\\u003eTimes\\u003c/th\\u003e\\u003c/tr\\u003e\\u003c/tbody\\u003e\\u003c/table\\u003e"'
 
 bindedPlayers={}
 
@@ -69,6 +70,7 @@ def clear(r):
     text = text.replace(deltext2, "|")
     text = text.replace(deltext3, "|")
     text = text.replace(deltext4, "")
+    text = text.replace(deltext5, "")
     return text
 
 def updateKills(PlayerNum):
@@ -162,7 +164,7 @@ while True:
                         
             if((int(players[x].KillsNumbers[y]) > int(players[x].lastKillsNumbers[y])) and (players[x].KillsNames[y] == players[x].lastKillsNames[y])):
                 print("It seems " + players[x].Name + " killed " + players[x].KillsNames[y])
-                
+
         for y in range(0, players[x].KilledByListEntries):
             
             try:
