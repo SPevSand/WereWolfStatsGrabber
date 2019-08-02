@@ -163,7 +163,7 @@ while True:
                         print("It seems " + players[x].Name + " killed " + players[x].KillsNames[z])
             try:
                 if((int(players[x].KillsNumbers[y]) > int(players[x].lastKillsNumbers[y])) and (players[x].KillsNames[y] == players[x].lastKillsNames[y])):
-                print("It seems " + players[x].Name + " killed " + players[x].KillsNames[y])
+                    print("It seems " + players[x].Name + " killed " + players[x].KillsNames[y])
             except IndexError:
                 for z in range(0, players[x].KillsListEntries):
                     if(players[x].KillsNames[z] not in players[x].lastKillsNames):
