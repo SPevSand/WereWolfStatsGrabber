@@ -161,9 +161,13 @@ while True:
                 for z in range(0, players[x].KillsListEntries):
                     if(players[x].KillsNames[z] not in players[x].lastKillsNames):
                         print("It seems " + players[x].Name + " killed " + players[x].KillsNames[z])
-                        
-            if((int(players[x].KillsNumbers[y]) > int(players[x].lastKillsNumbers[y])) and (players[x].KillsNames[y] == players[x].lastKillsNames[y])):
+            try:
+                if((int(players[x].KillsNumbers[y]) > int(players[x].lastKillsNumbers[y])) and (players[x].KillsNames[y] == players[x].lastKillsNames[y])):
                 print("It seems " + players[x].Name + " killed " + players[x].KillsNames[y])
+            except IndexError:
+                for z in range(0, players[x].KillsListEntries):
+                    if(players[x].KillsNames[z] not in players[x].lastKillsNames):
+                        print("It seems " + players[x].Name + " killed " + players[x].KillsNames[z])
 
         for y in range(0, players[x].KilledByListEntries):
             
@@ -174,10 +178,14 @@ while True:
                 for z in range(0, players[x].KilledByListEntries):
                     if(players[x].KilledByNames[z] not in players[x].lastKilledByNames):
                         print("It seems " + players[x].KilledByNames[z] + " killed " + players[x].Name)
-                        
-            if(int(players[x].KilledByNumbers[y]) > int(players[x].lastKilledByNumbers[y]) and (players[x].KilledByNames[y] == players[x].lastKilledByNames[y])):
-                print("It seems " + players[x].KilledByNames[y] + " killed " + players[x].Name)
-                
+            try:
+                if(int(players[x].KilledByNumbers[y]) > int(players[x].lastKilledByNumbers[y]) and (players[x].KilledByNames[y] == players[x].lastKilledByNames[y])):
+                    print("It seems " + players[x].KilledByNames[y] + " killed " + players[x].Name)
+            except ValueError:
+                for z in range(0, players[x].KilledByListEntries):
+                    if(players[x].KilledByNames[z] not in players[x].lastKilledByNames):
+                        print("It seems " + players[x].KilledByNames[z] + " killed " + players[x].Name)
+
         players[x].lastKillsNames = players[x].KillsNames
         players[x].lastKillsNumbers = players[x].KillsNumbers
         players[x].lastKilledByNames = players[x].KilledByNames
