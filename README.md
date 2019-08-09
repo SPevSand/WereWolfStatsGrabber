@@ -6,7 +6,7 @@ Linux:
 1. $git clone https://github.com/SPevSand/WereWolfStatsGrabber.git
 2. $cd WereWolfStatsGrabber
 3. $pip install -r requirements.txt
-4. In the same directory put players.txt file with short names and IDs.  
+4. In the same directory put players.txt file with short names and IDs without spaces.  
   Syntax: name:id<br />Example:
   ```
   name1:123
@@ -16,7 +16,7 @@ Linux:
 
 Windows:
 1. Download script
-2. In the same directory put players.txt file with short names and IDs.  
+2. In the same directory put players.txt file with short names and IDs without spaces.  
   Syntax: name:id<br />Example:
   ```
   name1:123
