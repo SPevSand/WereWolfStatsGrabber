@@ -88,7 +88,6 @@ def updateKilledBy(PlayerNum):
 def writeIntoList(PlayerNum, KillOrBy, r):
     b = clear(r).split("|")
     if(KillOrBy == "Kill"):
-        #print(b)
         for x in range(0, len(b)):
             if(x%2 == 0):
                 players[PlayerNum].KillsNames.append(b[x])
