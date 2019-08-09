@@ -9,10 +9,10 @@ Linux:
 4. In the same directory put players.txt file with short names and IDs.  
   Syntax: name:id
   Example:
-  
-    name1:123
-    name2:456
-
+  ```
+  name1:123
+  name2:456
+  ```
 5. $python start.py
 
 Windows:
@@ -20,10 +20,10 @@ Windows:
 2. In the same directory put players.txt file with short names and IDs.  
   Syntax: name:id
   Example:
-  
-    name1:123
-    name2:456
-    
+  ```
+  name1:123
+  name2:456
+  ```
 3. Use python interpreter to launch
 
 ## Where do I get IDs of players?  
