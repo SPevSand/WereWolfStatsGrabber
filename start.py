@@ -88,6 +88,7 @@ def updateKilledBy(PlayerNum):
 def writeIntoList(PlayerNum, KillOrBy, r):
     b = clear(r).split("|")
     if(KillOrBy == "Kill"):
+        #print(b)
         for x in range(0, len(b)):
             if(x%2 == 0):
                 players[PlayerNum].KillsNames.append(b[x])
@@ -125,8 +126,14 @@ while True:
             print("\033[91mGame starts\033[0m\n")
             break
     else:
-        r = requests.get("https://www.tgwerewolf.com/Stats/Player/" + bindedPlayers[tempvar])
-        getName = (html.fromstring(r.text).xpath('.//div[@class="box-title margin-bottom-30"]/p/text()'))
+        while True:
+            try:
+                r = requests.get("https://www.tgwerewolf.com/Stats/Player/" + bindedPlayers[tempvar])
+                break
+            except requests.exceptions.ConnectionError:
+                print("\033[93mCouldn't connect to the server\nRetry in 3 sec\033[0m")
+                time.sleep(3)
+        getName = (html.fromstring(r.text).xpath('.//div[@class="box-title"]/p/text()'))
         
         players.append(Player("".join(getName), urlKills + bindedPlayers[tempvar] + "?pid=" + bindedPlayers[tempvar], urlKilledBy + bindedPlayers[tempvar] + "?pid=" + bindedPlayers[tempvar]))
         
@@ -157,7 +164,7 @@ while True:
             try:
                 if((players[x].KillsNames.index(players[x].KillsNames[y]) < players[x].lastKillsNames.index(players[x].KillsNames[y]))):
                     print("It seems " + players[x].Name + " killed " + players[x].KillsNames[y])
-            except ValueError:
+            except IndexError:
                 for z in range(0, players[x].KillsListEntries):
                     if(players[x].KillsNames[z] not in players[x].lastKillsNames):
                         print("It seems " + players[x].Name + " killed " + players[x].KillsNames[z])
@@ -174,14 +181,14 @@ while True:
             try:
                 if((players[x].KilledByNames.index(players[x].KilledByNames[y]) < players[x].lastKilledByNames.index(players[x].KilledByNames[y]))):
                     print("It seems " + players[x].KilledByNames[y] + " killed " + players[x].Name)
-            except ValueError:
+            except IndexError:
                 for z in range(0, players[x].KilledByListEntries):
                     if(players[x].KilledByNames[z] not in players[x].lastKilledByNames):
                         print("It seems " + players[x].KilledByNames[z] + " killed " + players[x].Name)
             try:
                 if(int(players[x].KilledByNumbers[y]) > int(players[x].lastKilledByNumbers[y]) and (players[x].KilledByNames[y] == players[x].lastKilledByNames[y])):
                     print("It seems " + players[x].KilledByNames[y] + " killed " + players[x].Name)
-            except ValueError:
+            except IndexError:
                 for z in range(0, players[x].KilledByListEntries):
                     if(players[x].KilledByNames[z] not in players[x].lastKilledByNames):
                         print("It seems " + players[x].KilledByNames[z] + " killed " + players[x].Name)
