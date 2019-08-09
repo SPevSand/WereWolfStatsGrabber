@@ -7,8 +7,7 @@ Linux:
 2. $cd WereWolfStatsGrabber
 3. $pip install -r requirements.txt
 4. In the same directory put players.txt file with short names and IDs.  
-  Syntax: name:id
-  Example:
+  Syntax: name:id<br />Example:
   ```
   name1:123
   name2:456
@@ -18,8 +17,7 @@ Linux:
 Windows:
 1. Download script
 2. In the same directory put players.txt file with short names and IDs.  
-  Syntax: name:id
-  Example:
+  Syntax: name:id<br />Example:
   ```
   name1:123
   name2:456
