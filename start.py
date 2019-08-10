@@ -163,7 +163,7 @@ while True:
             try:
                 if((players[x].KillsNames.index(players[x].KillsNames[y]) < players[x].lastKillsNames.index(players[x].KillsNames[y]))):
                     print("It seems " + players[x].Name + " killed " + players[x].KillsNames[y])
-            except IndexError:
+            except ValueError:
                 for z in range(0, players[x].KillsListEntries):
                     if(players[x].KillsNames[z] not in players[x].lastKillsNames):
                         print("It seems " + players[x].Name + " killed " + players[x].KillsNames[z])
@@ -180,7 +180,7 @@ while True:
             try:
                 if((players[x].KilledByNames.index(players[x].KilledByNames[y]) < players[x].lastKilledByNames.index(players[x].KilledByNames[y]))):
                     print("It seems " + players[x].KilledByNames[y] + " killed " + players[x].Name)
-            except IndexError:
+            except ValueError:
                 for z in range(0, players[x].KilledByListEntries):
                     if(players[x].KilledByNames[z] not in players[x].lastKilledByNames):
                         print("It seems " + players[x].KilledByNames[z] + " killed " + players[x].Name)
