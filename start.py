@@ -58,8 +58,8 @@ except FileNotFoundError:
     sys.exit(0)
 
 urlNameGrab = 'https://www.tgwerewolf.com/Stats/Player/'
-urlKills = 'https://www.tgwerewolf.com/Stats/PlayerKills/'
-urlKilledBy = 'https://www.tgwerewolf.com/Stats/PlayerKilledBy/'
+urlKills = 'https://www.tgwerewolf.com/Stats/PlayerKills/?pid='
+urlKilledBy = 'https://www.tgwerewolf.com/Stats/PlayerKilledBy/?pid='
 
 players = []
 amount_int = 0
@@ -67,8 +67,8 @@ amount_int = 0
 def clear(r):
     text = r.text
     text = text.replace(deltext1, "")
-    text = text.replace(deltext2, "|")
-    text = text.replace(deltext3, "|")
+    text = text.replace(deltext2, "|\|")
+    text = text.replace(deltext3, "|\|")
     text = text.replace(deltext4, "")
     text = text.replace(deltext5, "")
     return text
@@ -86,7 +86,7 @@ def updateKilledBy(PlayerNum):
     writeIntoList(PlayerNum, "By", r)
 
 def writeIntoList(PlayerNum, KillOrBy, r):
-    b = clear(r).split("|")
+    b = clear(r).split("|\|")
     if(KillOrBy == "Kill"):
         for x in range(0, len(b)):
             if(x%2 == 0):
@@ -134,7 +134,7 @@ while True:
                 time.sleep(3)
         getName = (html.fromstring(r.text).xpath('.//div[@class="box-title"]/p/text()'))
         
-        players.append(Player("".join(getName), urlKills + bindedPlayers[tempvar] + "?pid=" + bindedPlayers[tempvar], urlKilledBy + bindedPlayers[tempvar] + "?pid=" + bindedPlayers[tempvar]))
+        players.append(Player("".join(getName), urlKills + bindedPlayers[tempvar], urlKilledBy + bindedPlayers[tempvar]))
         
         print("Got new name: " + "".join(getName))
         amount_int += 1
