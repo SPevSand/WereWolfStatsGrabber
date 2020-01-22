@@ -39,7 +39,8 @@ deltext5 = '"\\u003ctable class=\\"table table-hover\\"\\u003e\\u003ctbody\\u003
 bindedPlayers={}
 
 try:
-    fileWithPlayers = str(open("players.txt", "r").read()).replace("\n", ":").split(":")
+    fileWithPlayers = str(open("players.txt", "r").read()).replace("\n", ":").replace(" ", "").split(":")
+    fileWithPlayers.remove("")
     playersListNames = []
     playersListIds = []
     for x in range(0, len(fileWithPlayers)):
@@ -108,17 +109,40 @@ def writeIntoList(PlayerNum, KillOrBy, r):
 
 signal.signal(signal.SIGINT, signal_handler)
 print("\n\033[94mWelcome to WereWolf Stats Grabber script for Telegram!\033[0m")
+print("Ctrl-C to quit\n")
 
 print("Avialable names: ")
 for key in bindedPlayers.keys():
   print("\033[92m" + key, end = ' ' + "\033[0m")
+print("\nYou can add new names using syntax name:id")
 
 while True:
     tempvar = input("\nEnter player's binded name: ")
-    if((tempvar not in bindedPlayers.keys()) and (tempvar != "")):
+    if(":" in tempvar):
+        tempvar = tempvar.split(":")
+        bindedPlayers[tempvar[0]]= tempvar[1]
+        f = open("players.txt", "a")
+        f.write("\n" + tempvar[0] + ":" + tempvar[1])
+        f.close()
+        del f
+        while True:
+            try:
+                r = requests.get("https://www.tgwerewolf.com/Stats/Player/" + bindedPlayers[tempvar[0]])
+                break
+            except requests.exceptions.ConnectionError:
+                print("\033[93mCouldn't connect to the server\nRetry in 3 sec\033[0m")
+                time.sleep(3)
+        getName = (html.fromstring(r.text).xpath('.//div[@class="box-title"]/p/text()'))
+        
+        players.append(Player("".join(getName), urlKills + bindedPlayers[tempvar[0]], urlKilledBy + bindedPlayers[tempvar[0]]))
+        
+        print("Got new name: " + "".join(getName))
+        amount_int += 1
+        print("Amount of players: " + str(amount_int), end = '')
+    elif((tempvar not in bindedPlayers.keys()) and (tempvar != "")):
         print("Typo?", end='')
         continue
-    if(tempvar == ""):
+    elif(tempvar == ""):
         if(amount_int < 5):
             continue
         else:
